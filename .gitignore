@@ -1,0 +1,8 @@
+.docker-compose.yml.swp
+.DS_Store
+anaconda-vol/
+home/
+postgres-data-vol/
+pgadmin-vol/
+pgadmin-home-vol/
+dbcredentials.env

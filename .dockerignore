@@ -1,0 +1,10 @@
+.dockerignore
+Dockerfile
+docker-compose.yml
+*.env
+*.sample
+anaconda-vol/
+home/
+postgres-data-vol/
+pgadmin-vol/
+pgadmin-home-vol/

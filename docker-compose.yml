@@ -1,0 +1,41 @@
+version: '3.8'  # Docker Compose version
+
+services:  # specifies the services to be run
+  anaconda:
+    container_name: py-pg-anaconda
+    build: . # This tells Docker Compose to use the Dockerfile in the current directory
+    ports:
+      - "8888:8888"
+      - "5001:5000"
+    volumes:
+      - "$PWD/anaconda-vol:/workspace"
+    tty: true
+    command: ["jupyter", "notebook", "--ip='*'", "--port=8888", "--no-browser", "--allow-root"]
+  
+  my_pgdb:
+    container_name: py-pg-db
+    hostname: my_pgdb
+    image: postgres:15.2-bullseye
+    ports:
+      - "54321:5432"
+    restart: unless-stopped
+    env_file:
+      - dbcredentials.env
+    volumes:
+      - "$PWD/postgres-data-vol:/var/lib/postgresql/data" 
+  
+  my_pgadmin:
+    container_name: py-pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    ports:
+      - "54322:80"
+    restart: unless-stopped
+    depends_on:
+      - my_pgdb
+    volumes:
+      - "$PWD/pgadmin-vol:/var/lib/pgadmin"
+      - "$PWD/pgadmin-home-vol:/home"
