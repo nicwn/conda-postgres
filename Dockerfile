@@ -8,5 +8,3 @@ RUN apt-get update && \
     && rm -rf /var/lib/apt/lists/*
 
 RUN conda install -y pandas sqlalchemy psycopg2
-
-COPY . /workspace/
