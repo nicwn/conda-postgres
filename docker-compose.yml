@@ -23,6 +23,7 @@ services:  # specifies the services to be run
       - dbcredentials.env
     volumes:
       - "$PWD/postgres-data-vol:/var/lib/postgresql/data" 
+    shm_size: '512mb'
   
   my_pgadmin:
     container_name: py-pgadmin
